@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:id="@+id/load_more_progress_rl"
+    android:gravity="center"
+    android:background="@color/white"
+    >
+
+    <TextView
+        android:id="@+id/more_progress_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="16sp"
+        android:text="正在更新中"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/more_progress_pb"
+        />
+
+    <ProgressBar
+          android:id="@+id/more_progress_pb"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+               style="?android:attr/progressBarStyleInverse"
+              android:indeterminate="false"
+
+            />
+</RelativeLayout>
