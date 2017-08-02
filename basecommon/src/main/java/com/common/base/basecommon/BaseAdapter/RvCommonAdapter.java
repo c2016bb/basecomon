@@ -73,6 +73,12 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
         private int mLayoutId;
         private List<T> mDatas;
         private RecyclerView.LayoutManager layoutManager;
+       private RecyclerView.ItemDecoration decoration;
+
+        public Builder setDecoration(RecyclerView.ItemDecoration decoration) {
+            this.decoration = decoration;
+            return this;
+        }
 
         private int spanCount = 1;
 
@@ -172,7 +178,9 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
             } else {
                 mRecyclerView.setAdapter(sinpleRVAdapter);
             }
-//            mRecyclerView.addItemDecoration(new DividerItemDecoration(context, LinearLayout.VERTICAL));
+            if (decoration!=null) {
+                mRecyclerView.addItemDecoration(decoration);
+            }
             return sinpleRVAdapter;
         }
     }

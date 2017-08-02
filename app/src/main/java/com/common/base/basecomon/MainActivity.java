@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
-import com.common.base.basecommon.BaseAdapter.DividerItemDecoration;
 import com.common.base.basecommon.BaseAdapter.OnItemAdapterClickListener;
 import com.common.base.basecommon.BaseAdapter.RvCommonAdapter;
 
