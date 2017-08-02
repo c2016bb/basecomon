@@ -1,10 +1,9 @@
 package com.common.base.basecommon.BaseAdapter;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.*;
+import android.support.v7.widget.DividerItemDecoration;
+import android.widget.LinearLayout;
 
 
 import com.common.base.basecommon.BaseAdapter.Base.ItemViewDelegate;
@@ -173,6 +172,7 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
             } else {
                 mRecyclerView.setAdapter(sinpleRVAdapter);
             }
+//            mRecyclerView.addItemDecoration(new DividerItemDecoration(context, LinearLayout.VERTICAL));
             return sinpleRVAdapter;
         }
     }

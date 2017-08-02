@@ -27,19 +27,19 @@ public class ItemViewDelegateManager<T>
         return this;
     }
 
-    public ItemViewDelegateManager<T> addDelegate(int viewType, ItemViewDelegate<T> delegate)
-    {
-        if (delegates.get(viewType) != null)
-        {
-            throw new IllegalArgumentException(
-                    "An ItemViewDelegate is already registered for the viewType = "
-                            + viewType
-                            + ". Already registered ItemViewDelegate is "
-                            + delegates.get(viewType));
-        }
-        delegates.put(viewType, delegate);
-        return this;
-    }
+//    public ItemViewDelegateManager<T> addDelegate(int viewType, ItemViewDelegate<T> delegate)
+//    {
+//        if (delegates.get(viewType) != null)
+//        {
+//            throw new IllegalArgumentException(
+//                    "An ItemViewDelegate is already registered for the viewType = "
+//                            + viewType
+//                            + ". Already registered ItemViewDelegate is "
+//                            + delegates.get(viewType));
+//        }
+//        delegates.put(viewType, delegate);
+//        return this;
+//    }
 
     public ItemViewDelegateManager<T> removeDelegate(ItemViewDelegate<T> delegate)
     {

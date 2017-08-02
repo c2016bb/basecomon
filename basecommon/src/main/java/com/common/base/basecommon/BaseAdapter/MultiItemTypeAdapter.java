@@ -1,6 +1,7 @@
 package com.common.base.basecommon.BaseAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.common.base.basecommon.BaseAdapter.Base.ItemViewDelegate;
 import com.common.base.basecommon.BaseAdapter.Base.ItemViewDelegateManager;
 import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +23,8 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
     protected Context mContext;
     protected List<T> mDatas;
     private  boolean isAddViewType=false;//是否通过添加viewType添加数据的
+    private  List<Integer>spans;
+
 
     protected ItemViewDelegateManager mItemViewDelegateManager;
     protected OnItemAdapterClickListener mOnItemClickListener;
@@ -39,6 +43,7 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
         mContext = context;
         mDatas = datas;
         mItemViewDelegateManager = new ItemViewDelegateManager();
+        spans=new ArrayList<>();
     }
 
     @Override
@@ -116,7 +121,8 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
     public MultiItemTypeAdapter addItemViewDelegate(int viewType, ItemViewDelegate<T> itemViewDelegate) {
         isAddViewType=true;
-        mItemViewDelegateManager.addDelegate(viewType, itemViewDelegate);
+        spans.add(viewType);
+        mItemViewDelegateManager.addDelegate(itemViewDelegate);
         return this;
     }
 
@@ -136,7 +142,7 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
                 griManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        return getItemViewType(position);
+                        return spans.get(getItemViewType(position));
                     }
                 });
             }
