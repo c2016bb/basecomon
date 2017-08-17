@@ -1,6 +1,7 @@
 package com.common.base.basecommon.BaseAdapter;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.*;
 import android.support.v7.widget.DividerItemDecoration;
 import android.widget.LinearLayout;
@@ -28,7 +29,7 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
         void convert(ViewHolder holder, T t, int position);
     }
 
-    public RvCommonAdapter(Context context, final int layoutId, List<T> datas, final InitViewCallBack callBack, final OnItemAdapterClickListener onItemClickListener, RecyclerView mRecyclerView) {
+    public RvCommonAdapter(Context context, final @LayoutRes int layoutId, List<T> datas, final InitViewCallBack callBack, final OnItemAdapterClickListener onItemClickListener, RecyclerView mRecyclerView) {
         super(context, datas);
         this.layoutId = layoutId;
         this.callBack = callBack;
@@ -125,7 +126,7 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
             return this;
         }
 
-        public Builder(Context context, int mLayoutId, List<T> mDatas) {
+        public Builder(Context context,@LayoutRes int mLayoutId, List<T> mDatas) {
             this.context = context;
             this.mLayoutId = mLayoutId;
             this.mDatas = mDatas;
@@ -138,7 +139,7 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
         }
 
 
-        public Builder setLoadMoreListener(OnLoadMoreListener onLoadMoreListener, int mLoadMoreLayoutId) {
+        public Builder setLoadMoreListener(OnLoadMoreListener onLoadMoreListener,@LayoutRes int mLoadMoreLayoutId) {
             this.onLoadMoreListener = onLoadMoreListener;
             this.mLoadMoreLayoutId = mLoadMoreLayoutId;
             return this;
