@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
      recyclerView=(RecyclerView) findViewById(R.id.recycleView);
-//        setRecycleViewAdapter();
-        setRecycleViewAdapter12();
+        setRecycleViewAdapter();
+//        setRecycleViewAdapter12();
     }
     private class OnItemClick implements OnItemAdapterClickListener {
         @Override
