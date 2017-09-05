@@ -3,6 +3,7 @@ package com.common.base.basecommon.BaseAdapter.wrapper;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -62,6 +63,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
+        Log.i(TAG, "onCreateViewHolder: ");
         if (viewType == ITEM_TYPE_LOAD_MORE)
         {
             ViewHolder holder;
@@ -78,9 +80,11 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<ViewHolder> {
         return (ViewHolder) mInnerAdapter.onCreateViewHolder(parent, viewType);
     }
 
+    private static final String TAG = "cc";
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)
     {
+        Log.i(TAG, "onBindViewHolder: ");
         if (isShowLoadMore(position))
         {
             if (mOnLoadMoreListener != null)
@@ -95,7 +99,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView)
     {
-
+        Log.i(TAG, "onAttachedToRecyclerView: ");
         WrapperUtils.onAttachedToRecyclerView(mInnerAdapter, recyclerView, new WrapperUtils.SpanSizeCallback()
         {
             @Override
@@ -103,10 +107,12 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<ViewHolder> {
             {
                 if (isShowLoadMore(position))
                 {
+                    Log.i(TAG, "getSpanSize: 加载更多的"+layoutManager.getSpanCount());
                     return layoutManager.getSpanCount();
                 }
                 if (oldLookup != null)
                 {
+                    Log.i(TAG, "getSpanSize: 旧的");
                     return oldLookup.getSpanSize(position);
                 }
                 return 1;
@@ -118,6 +124,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onViewAttachedToWindow(ViewHolder holder)
     {
+        Log.i(TAG, "onViewAttachedToWindow: ");
         mInnerAdapter.onViewAttachedToWindow(holder);
 
         if (isShowLoadMore(holder.getLayoutPosition()))
@@ -133,6 +140,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<ViewHolder> {
         if (lp != null
                 && lp instanceof StaggeredGridLayoutManager.LayoutParams)
         {
+            Log.i(TAG, "setFullSpan: StaggeredGridLayoutManager");
             StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
 
             p.setFullSpan(true);

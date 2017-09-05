@@ -1,4 +1,4 @@
-package com.common.base.basecommon.BaseAdapter;
+package com.common.base.basecommon.BaseAdapter.listener;
 
 import android.view.View;
 

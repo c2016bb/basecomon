@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.common.base.basecommon.BaseAdapter.Base.ItemViewDelegate;
 import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
+import com.common.base.basecommon.BaseAdapter.listener.OnItemAdapterClickListener;
 
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.common.base.basecommon.BaseAdapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,8 +10,9 @@ import android.view.ViewGroup;
 import com.common.base.basecommon.BaseAdapter.Base.ItemViewDelegate;
 import com.common.base.basecommon.BaseAdapter.Base.ItemViewDelegateManager;
 import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
+import com.common.base.basecommon.BaseAdapter.listener.OnItemAdapterClickListener;
+import com.common.base.basecommon.BaseAdapter.listener.OnItemAdapterLongClickListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +42,7 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public int getItemViewType(int position) {
-        return !this.useItemViewDelegateManager()?super.getItemViewType(position):this.mItemViewDelegateManager.getItemViewType(this.mDatas.get(position), position);
+        return !this.useItemViewDelegateManager() ? super.getItemViewType(position) : this.mItemViewDelegateManager.getItemViewType(this.mDatas.get(position), position);
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -66,26 +66,25 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
     }
 
     protected void setListener(ViewGroup parent, final ViewHolder viewHolder, final int viewType) {
-        if(this.isEnabled(viewType)) {
+        if (this.isEnabled(viewType)) {
             viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if(MultiItemTypeAdapter.this.mOnItemClickListener != null) {
+                    if (MultiItemTypeAdapter.this.mOnItemClickListener != null) {
                         int position = viewHolder.getAdapterPosition();
                         MultiItemTypeAdapter.this.mOnItemClickListener.onItemClick(v, viewHolder, position, viewType);
                     }
 
                 }
             });
-            viewHolder.getConvertView().setOnLongClickListener(new View.OnLongClickListener() {
-                public boolean onLongClick(View v) {
-                    if(MultiItemTypeAdapter.this.mOnItemClickListener != null) {
+
+            if (MultiItemTypeAdapter.this.mOnItemLongClickListener != null) {
+                viewHolder.getConvertView().setOnLongClickListener(new View.OnLongClickListener() {
+                    public boolean onLongClick(View v) {
                         int position = viewHolder.getAdapterPosition();
                         return MultiItemTypeAdapter.this.mOnItemLongClickListener.onItemLongClick(v, viewHolder, position, viewType);
-                    } else {
-                        return false;
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -93,10 +92,12 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
         this.convert(holder, this.mDatas.get(position));
     }
 
+
     public int getItemCount() {
         int itemCount = this.mDatas.size();
         return itemCount;
     }
+
 
     public List<T> getDatas() {
         return this.mDatas;
@@ -119,10 +120,10 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        if(this.isAddViewType) {
+        if (this.isAddViewType) {
             RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-            if(manager instanceof GridLayoutManager) {
-                GridLayoutManager griManager = (GridLayoutManager)manager;
+            if (manager instanceof GridLayoutManager) {
+                GridLayoutManager griManager = (GridLayoutManager) manager;
                 griManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     public int getSpanSize(int position) {
                         return MultiItemTypeAdapter.this.getItemViewType(position);

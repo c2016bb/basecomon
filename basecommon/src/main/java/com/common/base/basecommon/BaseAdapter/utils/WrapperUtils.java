@@ -3,6 +3,7 @@ package com.common.base.basecommon.BaseAdapter.utils;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.ViewGroup;
 
 /**
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
  */
 public class WrapperUtils
 {
+    private static final String TAG = "cc";
     public interface SpanSizeCallback
     {
         int getSpanSize(GridLayoutManager layoutManager, GridLayoutManager.SpanSizeLookup oldLookup, int position);
@@ -22,6 +24,7 @@ public class WrapperUtils
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager)
         {
+            Log.i(TAG, "onAttachedToRecyclerView: 属于GridLayoutManager");
             final GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
             final GridLayoutManager.SpanSizeLookup spanSizeLookup = gridLayoutManager.getSpanSizeLookup();
 
@@ -34,6 +37,9 @@ public class WrapperUtils
                 }
             });
             gridLayoutManager.setSpanCount(gridLayoutManager.getSpanCount());
+        }else{
+            Log.i(TAG, "onAttachedToRecyclerView: 不属于GridLayoutManager");
+            
         }
     }
 

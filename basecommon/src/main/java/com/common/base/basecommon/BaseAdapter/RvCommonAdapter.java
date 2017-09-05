@@ -3,12 +3,14 @@ package com.common.base.basecommon.BaseAdapter;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.*;
-import android.support.v7.widget.DividerItemDecoration;
-import android.widget.LinearLayout;
+import android.util.Log;
 
 
 import com.common.base.basecommon.BaseAdapter.Base.ItemViewDelegate;
 import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
+import com.common.base.basecommon.BaseAdapter.listener.InitViewCallBack;
+import com.common.base.basecommon.BaseAdapter.listener.OnItemAdapterClickListener;
+import com.common.base.basecommon.BaseAdapter.listener.OnLoadMoreListener;
 import com.common.base.basecommon.BaseAdapter.wrapper.LoadMoreWrapper;
 import com.common.base.basecommon.R;
 
@@ -25,9 +27,6 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
     private int layoutId;
     private RecyclerView mRecyclerView;
 
-    public interface InitViewCallBack<T> {
-        void convert(ViewHolder holder, T t, int position);
-    }
 
     public RvCommonAdapter(Context context, final @LayoutRes int layoutId, List<T> datas, final InitViewCallBack callBack, final OnItemAdapterClickListener onItemClickListener, RecyclerView mRecyclerView) {
         super(context, datas);
@@ -81,6 +80,8 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
             return this;
         }
 
+
+
         private int spanCount = 1;
 
         public  static  final int LINEARLAYOUTMANAGER=1;
@@ -100,15 +101,9 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
 
         public Builder setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
             this.onLoadMoreListener = onLoadMoreListener;
+            this.mLoadMoreLayoutId= R.layout.layout_more_progress_text;
             return  this;
         }
-
-
-
-        public interface OnLoadMoreListener {
-            void onLoadMore(ViewHolder holder);
-        }
-
 
         public Builder setOnItemAdapterClickListener(OnItemAdapterClickListener onItemClickListener) {
             this.onItemClickListener = onItemClickListener;
@@ -132,11 +127,7 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
             this.mDatas = mDatas;
         }
 
-        public Builder setLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
-            this.onLoadMoreListener = onLoadMoreListener;
-            this.mLoadMoreLayoutId= R.layout.layout_more_progress_text;
-            return this;
-        }
+
 
 
         public Builder setLoadMoreListener(OnLoadMoreListener onLoadMoreListener,@LayoutRes int mLoadMoreLayoutId) {
@@ -150,6 +141,7 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
             return this;
         }
 
+        private static final String TAG = "cc";
         public RvCommonAdapter createAdapter(RecyclerView mRecyclerView, final InitViewCallBack<T> callBack) {
 
             if (layoutManagerType == 0 || layoutManagerType==LINEARLAYOUTMANAGER) {
@@ -165,12 +157,14 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
             }
             final RvCommonAdapter sinpleRVAdapter = new RvCommonAdapter(context, mLayoutId, mDatas, callBack, onItemClickListener, mRecyclerView);
             if (onLoadMoreListener != null) {
+                Log.i(TAG, "createAdapter: 加载更多");
                 mLoadMoreAdapter = new LoadMoreWrapper(sinpleRVAdapter);
                 mLoadMoreAdapter.setLoadMoreView(mLoadMoreLayoutId);
                 mLoadMoreAdapter.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
                     @Override
                     public void onLoadMoreRequested(ViewHolder holder) {
                         if (onLoadMoreListener != null) {
+                            Log.i(TAG, "onLoadMoreRequested: 加载更多");
                             onLoadMoreListener.onLoadMore(holder);
                         }
                     }
