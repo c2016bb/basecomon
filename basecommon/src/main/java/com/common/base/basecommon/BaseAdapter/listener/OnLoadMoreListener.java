@@ -1,11 +1,11 @@
 package com.common.base.basecommon.BaseAdapter.listener;
 
-import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
+import com.common.base.basecommon.BaseAdapter.Base.RvViewHolder;
 
 /**
  * Created by User on 2017/8/17.
  */
 
 public interface OnLoadMoreListener {
-    void onLoadMore(ViewHolder holder);
+    void onLoadMore(RvViewHolder holder);
 }

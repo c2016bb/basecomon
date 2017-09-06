@@ -7,7 +7,7 @@ import android.util.Log;
 
 
 import com.common.base.basecommon.BaseAdapter.Base.ItemViewDelegate;
-import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
+import com.common.base.basecommon.BaseAdapter.Base.RvViewHolder;
 import com.common.base.basecommon.BaseAdapter.listener.InitViewCallBack;
 import com.common.base.basecommon.BaseAdapter.listener.OnItemAdapterClickListener;
 import com.common.base.basecommon.BaseAdapter.listener.OnLoadMoreListener;
@@ -46,7 +46,7 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
             }
 
             @Override
-            public void convert(ViewHolder holder, T t, int position) {
+            public void convert(RvViewHolder holder, T t, int position) {
                 callBack.convert(holder, t, position);
             }
         });
@@ -61,7 +61,7 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
         mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
-    public  ViewHolder getLoadMoreView(){
+    public RvViewHolder getLoadMoreView(){
         if (mRecyclerView.getAdapter() instanceof LoadMoreWrapper){
             return  ((LoadMoreWrapper) mRecyclerView.getAdapter()).getLoadMoreHolder();
         }
@@ -162,7 +162,7 @@ public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
                 mLoadMoreAdapter.setLoadMoreView(mLoadMoreLayoutId);
                 mLoadMoreAdapter.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
                     @Override
-                    public void onLoadMoreRequested(ViewHolder holder) {
+                    public void onLoadMoreRequested(RvViewHolder holder) {
                         if (onLoadMoreListener != null) {
                             Log.i(TAG, "onLoadMoreRequested: 加载更多");
                             onLoadMoreListener.onLoadMore(holder);

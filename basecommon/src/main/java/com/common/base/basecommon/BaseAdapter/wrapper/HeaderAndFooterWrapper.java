@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
+import com.common.base.basecommon.BaseAdapter.Base.RvViewHolder;
 import com.common.base.basecommon.BaseAdapter.utils.WrapperUtils;
 
 
@@ -34,12 +34,12 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
         if (mHeaderViews.get(viewType) != null)
         {
 
-            ViewHolder holder = ViewHolder.createViewHolder(parent.getContext(), mHeaderViews.get(viewType));
+            RvViewHolder holder = RvViewHolder.createViewHolder(parent.getContext(), mHeaderViews.get(viewType));
             return holder;
 
         } else if (mFootViews.get(viewType) != null)
         {
-            ViewHolder holder = ViewHolder.createViewHolder(parent.getContext(), mFootViews.get(viewType));
+            RvViewHolder holder = RvViewHolder.createViewHolder(parent.getContext(), mFootViews.get(viewType));
             return holder;
         }
         return mInnerAdapter.onCreateViewHolder(parent, viewType);

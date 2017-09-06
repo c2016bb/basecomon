@@ -7,7 +7,7 @@ import android.view.View;
 
 
 import com.common.base.basecommon.BaseAdapter.Base.ItemViewDelegate;
-import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
+import com.common.base.basecommon.BaseAdapter.Base.RvViewHolder;
 import com.common.base.basecommon.BaseAdapter.listener.OnItemAdapterClickListener;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public abstract class CommonAdapter<T> extends MultiItemTypeAdapter<T> {
 
         setOnItemAdapterClickListener(new OnItemAdapterClickListener() {
             @Override
-            public void onItemClick(View view, ViewHolder holder, int position, int viewType) {
+            public void onItemClick(View view, RvViewHolder holder, int position, int viewType) {
                 CommonAdapter.this.onItemClick(view,holder,position);
             }
         });
@@ -55,7 +55,7 @@ public abstract class CommonAdapter<T> extends MultiItemTypeAdapter<T> {
             }
 
             @Override
-            public void convert(ViewHolder holder, T t, int position)
+            public void convert(RvViewHolder holder, T t, int position)
             {
 //                LogUtils.D("convert");
                 CommonAdapter.this.convert(holder, t, position);
@@ -64,5 +64,5 @@ public abstract class CommonAdapter<T> extends MultiItemTypeAdapter<T> {
     }
     protected abstract void onItemClick(View view, RecyclerView.ViewHolder holder, int position);
 
-    protected abstract void convert(ViewHolder holder, T t, int position);
+    protected abstract void convert(RvViewHolder holder, T t, int position);
 }

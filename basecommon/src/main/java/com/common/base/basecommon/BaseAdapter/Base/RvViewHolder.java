@@ -7,8 +7,8 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.text.util.Linkify;
 import android.util.SparseArray;
@@ -22,17 +22,19 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.common.base.basecommon.R;
+
 
 /**
  * Created by User on 2017/5/19.
  */
 
-public class ViewHolder extends RecyclerView.ViewHolder {
+public class RvViewHolder extends RecyclerView.ViewHolder {
     private SparseArray<View> mViews;
     private View mConvertView;
     private Context mContext;
 
-    public ViewHolder(Context context, View itemView)
+    public RvViewHolder(Context context, View itemView)
     {
         super(itemView);
         mContext = context;
@@ -41,19 +43,23 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public static ViewHolder createViewHolder(Context context, View itemView)
+    public static RvViewHolder createViewHolder(Context context, View itemView)
     {
-        ViewHolder holder = new ViewHolder(context, itemView);
+        RvViewHolder holder = new RvViewHolder(context, itemView);
         return holder;
     }
 
-    public static ViewHolder createViewHolder(Context context,
-                                              ViewGroup parent, int layoutId)
+    public static RvViewHolder createViewHolder(Context context,
+                                                ViewGroup parent, int layoutId)
     {
         View itemView = LayoutInflater.from(context).inflate(layoutId, parent,
                 false);
-        ViewHolder holder = new ViewHolder(context, itemView);
-        return holder;
+        final Drawable drawable=context.getResources().getDrawable(R.drawable.shui_bowen);
+            setItemBg(drawable,itemView);
+        return new RvViewHolder(context, itemView);
+    }
+    private static void setItemBg(Drawable drawable,View view){
+        view.setBackground(drawable);
     }
 
     /**
@@ -90,14 +96,14 @@ public class ViewHolder extends RecyclerView.ViewHolder {
      * @param text
      * @return
      */
-    public ViewHolder setText(@IdRes  int viewId, String text)
+    public RvViewHolder setText(@IdRes  int viewId, String text)
     {
         TextView tv = getView(viewId);
         tv.setText(text);
         return this;
     }
 
-    public ViewHolder setImageResource(@IdRes int viewId, int resId)
+    public RvViewHolder setImageResource(@IdRes int viewId, int resId)
     {
         ImageView view = getView(viewId);
         view.setImageResource(resId);
@@ -114,49 +120,49 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
 
 
-    public ViewHolder setImageBitmap(@IdRes int viewId, Bitmap bitmap)
+    public RvViewHolder setImageBitmap(@IdRes int viewId, Bitmap bitmap)
     {
         ImageView view = getView(viewId);
         view.setImageBitmap(bitmap);
         return this;
     }
 
-    public ViewHolder setImageDrawable(@IdRes int viewId, Drawable drawable)
+    public RvViewHolder setImageDrawable(@IdRes int viewId, Drawable drawable)
     {
         ImageView view = getView(viewId);
         view.setImageDrawable(drawable);
         return this;
     }
 
-    public ViewHolder setBackgroundColor(@IdRes int viewId, int color)
+    public RvViewHolder setBackgroundColor(@IdRes int viewId, int color)
     {
         View view = getView(viewId);
         view.setBackgroundColor(color);
         return this;
     }
 
-    public ViewHolder setBackgroundRes(@IdRes int viewId, int backgroundRes)
+    public RvViewHolder setBackgroundRes(@IdRes int viewId, int backgroundRes)
     {
         View view = getView(viewId);
         view.setBackgroundResource(backgroundRes);
         return this;
     }
 
-    public ViewHolder setTextColor(@IdRes int viewId, int textColor)
+    public RvViewHolder setTextColor(@IdRes int viewId, int textColor)
     {
         TextView view = getView(viewId);
         view.setTextColor(textColor);
         return this;
     }
 
-    public ViewHolder setTextColorRes(@IdRes int viewId, int textColorRes)
+    public RvViewHolder setTextColorRes(@IdRes int viewId, int textColorRes)
     {
         TextView view = getView(viewId);
         view.setTextColor(mContext.getResources().getColor(textColorRes));
         return this;
     }
 
-    public ViewHolder setVisible(@IdRes int viewId, int visible)
+    public RvViewHolder setVisible(@IdRes int viewId, int visible)
     {
         getView(viewId).setVisibility(visible);
         return this;
@@ -168,7 +174,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
 
     @SuppressLint("NewApi")
-    public ViewHolder setAlpha(@IdRes int viewId, float value)
+    public RvViewHolder setAlpha(@IdRes int viewId, float value)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
@@ -184,21 +190,21 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public ViewHolder setVisible(@IdRes int viewId, boolean visible)
+    public RvViewHolder setVisible(@IdRes int viewId, boolean visible)
     {
         View view = getView(viewId);
         view.setVisibility(visible ? View.VISIBLE : View.GONE);
         return this;
     }
 
-    public ViewHolder linkify(@IdRes int viewId)
+    public RvViewHolder linkify(@IdRes int viewId)
     {
         TextView view = getView(viewId);
         Linkify.addLinks(view, Linkify.ALL);
         return this;
     }
 
-    public ViewHolder setTypeface(Typeface typeface, int... viewIds)
+    public RvViewHolder setTypeface(Typeface typeface, int... viewIds)
     {
         for (int viewId : viewIds)
         {
@@ -209,14 +215,14 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public ViewHolder setProgress(@IdRes int viewId, int progress)
+    public RvViewHolder setProgress(@IdRes int viewId, int progress)
     {
         ProgressBar view = getView(viewId);
         view.setProgress(progress);
         return this;
     }
 
-    public ViewHolder setProgress(@IdRes int viewId, int progress, int max)
+    public RvViewHolder setProgress(@IdRes int viewId, int progress, int max)
     {
         ProgressBar view = getView(viewId);
         view.setMax(max);
@@ -224,21 +230,21 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public ViewHolder setMax(@IdRes int viewId, int max)
+    public RvViewHolder setMax(@IdRes int viewId, int max)
     {
         ProgressBar view = getView(viewId);
         view.setMax(max);
         return this;
     }
 
-    public ViewHolder setRating(@IdRes int viewId, float rating)
+    public RvViewHolder setRating(@IdRes int viewId, float rating)
     {
         RatingBar view = getView(viewId);
         view.setRating(rating);
         return this;
     }
 
-    public ViewHolder setRating(@IdRes int viewId, float rating, int max)
+    public RvViewHolder setRating(@IdRes int viewId, float rating, int max)
     {
         RatingBar view = getView(viewId);
         view.setMax(max);
@@ -246,21 +252,21 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public ViewHolder setTag(@IdRes int viewId, Object tag)
+    public RvViewHolder setTag(@IdRes int viewId, Object tag)
     {
         View view = getView(viewId);
         view.setTag(tag);
         return this;
     }
 
-    public ViewHolder setTag(@IdRes int viewId, int key, Object tag)
+    public RvViewHolder setTag(@IdRes int viewId, int key, Object tag)
     {
         View view = getView(viewId);
         view.setTag(key, tag);
         return this;
     }
 
-    public ViewHolder setChecked(@IdRes int viewId, boolean checked)
+    public RvViewHolder setChecked(@IdRes int viewId, boolean checked)
     {
         Checkable view = (Checkable) getView(viewId);
         view.setChecked(checked);
@@ -270,16 +276,16 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     /**
      * 关于事件的
      */
-    public ViewHolder setOnClickListener(@IdRes int viewId,
-                                         View.OnClickListener listener)
+    public RvViewHolder setOnClickListener(@IdRes int viewId,
+                                           View.OnClickListener listener)
     {
         View view = getView(viewId);
         view.setOnClickListener(listener);
         return this;
     }
 
-    public ViewHolder setOnTouchListener(@IdRes int viewId,
-                                         View.OnTouchListener listener)
+    public RvViewHolder setOnTouchListener(@IdRes int viewId,
+                                           View.OnTouchListener listener)
     {
         View view = getView(viewId);
         view.setOnTouchListener(listener);

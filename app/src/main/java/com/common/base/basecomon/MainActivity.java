@@ -2,12 +2,12 @@ package com.common.base.basecomon;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
-import com.common.base.basecommon.BaseAdapter.Decoration.ItemDecorationType;
+import com.common.base.basecommon.BaseAdapter.Base.RvViewHolder;
 import com.common.base.basecommon.BaseAdapter.RvComAdapter;
 import com.common.base.basecommon.BaseAdapter.listener.InitViewCallBack;
 import com.common.base.basecommon.BaseAdapter.listener.OnItemAdapterClickListener;
@@ -27,12 +27,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
      recyclerView=(RecyclerView) findViewById(R.id.recycleView);
-        setRecycleViewAdapter();
-//        setRecycleViewAdapter12();
+//        setRecycleViewAdapter();
+        setRecycleViewAdapter12();
     }
     private class OnItemClick implements OnItemAdapterClickListener {
         @Override
-        public void onItemClick(View view, ViewHolder holder, int position, int viewType) {
+        public void onItemClick(View view, RvViewHolder holder, int position, int viewType) {
 //            mDatas.clear();
 //             adapter.notifyDataSetChanged();
             Toast.makeText(MainActivity.this,"点击了"+viewType,Toast.LENGTH_LONG).show();
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     RvComAdapter adapter;
     private  class OnLoadMore implements OnLoadMoreListener{
             @Override
-            public void onLoadMore(ViewHolder holder) {
+            public void onLoadMore(RvViewHolder holder) {
 
             }
         }
@@ -60,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
                     setOnItemAdapterClickListener(new OnItemClick())
                     .setLayoutManagerType(RvComAdapter.GRIDLAYOUTMANAGER,3)
 //                    .setOrientation(OrientationHelper.HORIZONTAL)
-                    .setOnLoadMoreListener(new OnLoadMore())
-                    .setDefaltDecoration(ItemDecorationType.NOLASTITEM,R.drawable.shape_divider)
+//                    .setOnLoadMoreListener(new OnLoadMore())
+//                    .setDefaltDecoration(0,R.drawable.shape_divider)
+                    .setDefaltDecoration()
                     .setEmptyLayoutId(R.layout.layout_empty)
 //                    .setOnEmptyListener(new OnEmptyListener() {
 //                        @Override
@@ -76,10 +77,15 @@ public class MainActivity extends AppCompatActivity {
 //                    })
                     .into(recyclerView, new InitViewCallBack<String>() {
                         @Override
-                        public void convert(ViewHolder holder, String s, int position) {
+                        public void convert(RvViewHolder holder, String s, int position) {
                             holder.setText(R.id.item_tv,s);
                         }
                     });
+
+
+                  {
+
+             }
 
         }
 
@@ -91,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 .setOnLoadMoreListener(new OnLoadMore())
                 .createAdapter(recyclerView, new InitViewCallBack<String>() {
                     @Override
-                    public void convert(ViewHolder viewHolder, String s, int i) {
+                    public void convert(RvViewHolder viewHolder, String s, int i) {
                         viewHolder.setText(android.R.id.text1,s);
                     }
                 });

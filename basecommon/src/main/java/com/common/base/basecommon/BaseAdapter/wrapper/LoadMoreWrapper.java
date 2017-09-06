@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
+import com.common.base.basecommon.BaseAdapter.Base.RvViewHolder;
 import com.common.base.basecommon.BaseAdapter.utils.WrapperUtils;
 
 
@@ -15,20 +15,20 @@ import com.common.base.basecommon.BaseAdapter.utils.WrapperUtils;
  * Created by User on 2017/5/22.
  */
 
-public class LoadMoreWrapper<T> extends RecyclerView.Adapter<ViewHolder> {
+public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RvViewHolder> {
     public static final int ITEM_TYPE_LOAD_MORE = Integer.MAX_VALUE - 2;
 
     private RecyclerView.Adapter mInnerAdapter;
     private View mLoadMoreView;
     private int mLoadMoreLayoutId;
 
-    private ViewHolder mLoadMoreHolder;
+    private RvViewHolder mLoadMoreHolder;
 
-    public void setLoadMoreHolder(ViewHolder mLoadMoreHolder) {
+    public void setLoadMoreHolder(RvViewHolder mLoadMoreHolder) {
         this.mLoadMoreHolder = mLoadMoreHolder;
     }
 
-    public ViewHolder getLoadMoreHolder() {
+    public RvViewHolder getLoadMoreHolder() {
         return mLoadMoreHolder;
     }
 
@@ -61,28 +61,28 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<ViewHolder> {
 
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public RvViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         Log.i(TAG, "onCreateViewHolder: ");
         if (viewType == ITEM_TYPE_LOAD_MORE)
         {
-            ViewHolder holder;
+            RvViewHolder holder;
             if (mLoadMoreView != null)
             {
-                holder = ViewHolder.createViewHolder(parent.getContext(), mLoadMoreView);
+                holder = RvViewHolder.createViewHolder(parent.getContext(), mLoadMoreView);
             } else
             {
-                holder = ViewHolder.createViewHolder(parent.getContext(), parent, mLoadMoreLayoutId);
+                holder = RvViewHolder.createViewHolder(parent.getContext(), parent, mLoadMoreLayoutId);
             }
             setLoadMoreHolder(holder);
             return holder;
         }
-        return (ViewHolder) mInnerAdapter.onCreateViewHolder(parent, viewType);
+        return (RvViewHolder) mInnerAdapter.onCreateViewHolder(parent, viewType);
     }
 
     private static final String TAG = "cc";
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
+    public void onBindViewHolder(RvViewHolder holder, int position)
     {
         Log.i(TAG, "onBindViewHolder: ");
         if (isShowLoadMore(position))
@@ -122,7 +122,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<ViewHolder> {
 
 
     @Override
-    public void onViewAttachedToWindow(ViewHolder holder)
+    public void onViewAttachedToWindow(RvViewHolder holder)
     {
         Log.i(TAG, "onViewAttachedToWindow: ");
         mInnerAdapter.onViewAttachedToWindow(holder);
@@ -133,7 +133,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<ViewHolder> {
         }
     }
 
-    private void setFullSpan(ViewHolder holder)
+    private void setFullSpan(RvViewHolder holder)
     {
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
 
@@ -157,7 +157,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<ViewHolder> {
     public interface OnLoadMoreListener
     {
 
-        void onLoadMoreRequested(ViewHolder holder);
+        void onLoadMoreRequested(RvViewHolder holder);
     }
 
     private OnLoadMoreListener mOnLoadMoreListener;

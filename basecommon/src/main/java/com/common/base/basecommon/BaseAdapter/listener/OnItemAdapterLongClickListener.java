@@ -2,7 +2,7 @@ package com.common.base.basecommon.BaseAdapter.listener;
 
 import android.view.View;
 
-import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
+import com.common.base.basecommon.BaseAdapter.Base.RvViewHolder;
 
 
 /**
@@ -10,5 +10,5 @@ import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
  */
 
 public interface OnItemAdapterLongClickListener {
-    boolean onItemLongClick(View view, ViewHolder holder, int position, int viewType);
+    boolean onItemLongClick(View view, RvViewHolder holder, int position, int viewType);
 }

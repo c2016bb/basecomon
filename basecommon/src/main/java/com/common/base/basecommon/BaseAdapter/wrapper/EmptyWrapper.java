@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
+import com.common.base.basecommon.BaseAdapter.Base.RvViewHolder;
 import com.common.base.basecommon.BaseAdapter.utils.WrapperUtils;
 
 
@@ -36,13 +36,13 @@ public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolde
     {
         if (isEmpty())
         {
-            ViewHolder holder;
+            RvViewHolder holder;
             if (mEmptyView != null)
             {
-                holder = ViewHolder.createViewHolder(parent.getContext(), mEmptyView);
+                holder = RvViewHolder.createViewHolder(parent.getContext(), mEmptyView);
             } else
             {
-                holder = ViewHolder.createViewHolder(parent.getContext(), parent, mEmptyLayoutId);
+                holder = RvViewHolder.createViewHolder(parent.getContext(), parent, mEmptyLayoutId);
             }
             return holder;
         }

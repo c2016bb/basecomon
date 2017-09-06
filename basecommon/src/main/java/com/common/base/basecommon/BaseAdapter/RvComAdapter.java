@@ -12,7 +12,8 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 import com.common.base.basecommon.BaseAdapter.Base.ItemViewDelegate;
-import com.common.base.basecommon.BaseAdapter.Base.ViewHolder;
+import com.common.base.basecommon.BaseAdapter.Base.RvViewHolder;
+import com.common.base.basecommon.BaseAdapter.Decoration.DeafaltDividerLinearDecortion;
 import com.common.base.basecommon.BaseAdapter.Decoration.DefaltDividerItemDecoration;
 import com.common.base.basecommon.BaseAdapter.Decoration.ItemDecorationType;
 import com.common.base.basecommon.BaseAdapter.listener.InitViewCallBack;
@@ -60,6 +61,16 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
     public OnLoadMoreListener onLoadMoreListener;
     private  int itemDecorationType;
     private Drawable dividerDrawable;
+    private int defaltItemDecorationType;
+    private int itemBgDraId;
+
+    public @DrawableRes int getItemBgDraId() {
+        return R.drawable.shui_bowen;
+    }
+
+    public void setDefaltItemDecorationType(int defaltItemDecorationType) {
+        this.defaltItemDecorationType = defaltItemDecorationType;
+    }
 
     public void setDividerDrawable(Drawable dividerDrawable) {
         this.dividerDrawable = dividerDrawable;
@@ -115,10 +126,36 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             linearLayoutManager.setOrientation(mOrientation);
             mRecyclerView.setLayoutManager(linearLayoutManager);
+             if (defaltItemDecorationType==1){
+             decoration=new DeafaltDividerLinearDecortion(context,mOrientation);
+             }else if (defaltItemDecorationType==2){
+             DeafaltDividerLinearDecortion    decoration1=new DeafaltDividerLinearDecortion(context,mOrientation);
+                 if (itemDecorationType>0) {
+                     decoration1.setItemType(itemDecorationType);
+                 }
+                 if (dividerDrawable!=null){
+                     decoration1.setDrawable(dividerDrawable);
+                 }
+                 decoration=decoration1;
+             }
+
         } else if (layoutManagerType == GRIDLAYOUTMANAGER) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, spanCount);
             gridLayoutManager.setOrientation(mOrientation);
             mRecyclerView.setLayoutManager(gridLayoutManager);
+            if (defaltItemDecorationType==1){
+                decoration=new DefaltDividerItemDecoration(context,mOrientation);
+            }else if (defaltItemDecorationType==2){
+                DefaltDividerItemDecoration decoration1=new DefaltDividerItemDecoration(context,mOrientation);
+                if (itemDecorationType>0) {
+                    decoration1.setItemType(itemDecorationType);
+                }
+                if (dividerDrawable!=null){
+                    decoration1.setDrawable(dividerDrawable);
+                }
+                decoration=decoration1;
+            }
+
         } else {
             throw new IllegalArgumentException("LayoutManager must is LinearLayoutManager or GridLayoutManager ");
         }
@@ -128,19 +165,12 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
         mRecyclerView.setAdapter(this);
         if (decoration!=null){
             mRecyclerView.addItemDecoration(decoration);
-            if (decoration instanceof DefaltDividerItemDecoration){
-                ((DefaltDividerItemDecoration) decoration).setOrientation(mOrientation);
-                if (dividerDrawable!=null) {
-                    ((DefaltDividerItemDecoration) decoration).setDrawable(dividerDrawable);
-                }
-            }
         }
     }
 
 
     @Override
     public int getItemViewType(int position) {
-        Log.i(TAG, "getItemViewType: position---." + position);
         if (isEmpty) {
             return ITEM_TYPE_EMPTY;
         }
@@ -152,18 +182,16 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.i(TAG, "onCreateViewHolder: viewType---->" + viewType);
+    public RvViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ITEM_TYPE_EMPTY) {
-            Log.i(TAG, "onCreateViewHolder: mEmptyLayoutId-->" + mEmptyLayoutId);
-            ViewHolder hodler = ViewHolder.createViewHolder(this.mContext, parent, mEmptyLayoutId);
+            RvViewHolder hodler = RvViewHolder.createViewHolder(this.mContext, parent, mEmptyLayoutId);
             if (onEmptyListener != null) {
                 onEmptyListener.onEmpty(hodler);
             }
             return hodler;
         }
         if (viewType == ITEM_TYPE_LOAD_MORE) {
-            ViewHolder hodler = ViewHolder.createViewHolder(this.mContext, parent, mLoadMoreLayoutId);
+            RvViewHolder hodler = RvViewHolder.createViewHolder(this.mContext, parent, mLoadMoreLayoutId);
             if (onLoadMoreListener != null) {
                 onLoadMoreListener.onLoadMore(hodler);
             }
@@ -173,7 +201,7 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(RvViewHolder holder, int position) {
         if (isEmpty) {
             return;
         }
@@ -215,7 +243,7 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
             }
 
             @Override
-            public void convert(ViewHolder holder, T t, int position) {
+            public void convert(RvViewHolder holder, T t, int position) {
                 if (initView != null) {
                     initView.convert(holder, t, position);
                 }
@@ -245,18 +273,20 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
         }
     }
 
-    private static final String TAG = "cc";
 
     @Override
     public int getItemCount() {
         int count = super.getItemCount();
-        if (isEmpty(count)||hasLoadMore()||itemDecorationType== ItemDecorationType.NOLASTITEM){
-            if(decoration instanceof DefaltDividerItemDecoration){
-                ((DefaltDividerItemDecoration) decoration).setItemType(ItemDecorationType.NOLASTITEM);
+        if (decoration!=null) {
+            if (isEmpty(count) || hasLoadMore() || itemDecorationType == ItemDecorationType.NOLASTITEM) {
+                if (decoration instanceof DefaltDividerItemDecoration) {
+                    ((DefaltDividerItemDecoration) decoration).setItemType(ItemDecorationType.NOLASTITEM);
+                } else if (decoration instanceof DeafaltDividerLinearDecortion) {
+                                ((DeafaltDividerLinearDecortion) decoration).setItemType(ItemDecorationType.NOLASTITEM);
+                }
             }
         }
         if (isEmpty(count)) {
-            Log.i(TAG, "getItemCount: 1");
             isEmpty = true;
             return 1;
         }
@@ -286,10 +316,11 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
         private int mEmptyLayoutId;
         private OnEmptyListener onEmptyListener;
         private RecyclerView.ItemDecoration decoration;
+        private int defaltItemDecorationType=0;
         private int mOrientation = OrientationHelper.VERTICAL;
         private  int itemDecorationType=0;
         private Drawable dividerDrawable;
-
+        private static final String TAG = "Builder";
         public void setDividerDrawable(Drawable dividerDrawable) {
             this.dividerDrawable = dividerDrawable;
         }
@@ -304,11 +335,11 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
             return this;
         }
         public Builder setDefaltDecoration() {
-            this.decoration = new DefaltDividerItemDecoration(context);
+            this.defaltItemDecorationType=1;
             return this;
         }
         public Builder setDefaltDecoration(int itemDecorationType,@DrawableRes int drawableId) {
-            this.decoration = new DefaltDividerItemDecoration(context);
+            this.defaltItemDecorationType=2;
             if (itemDecorationType>0) {
                 this.itemDecorationType = itemDecorationType;
             }
@@ -316,7 +347,7 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
                 try {
                     this.dividerDrawable = context.getResources().getDrawable(drawableId);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.i(TAG, "setDefaltDecoration: e-->"+e);
                 }
             }
             return this;
@@ -374,6 +405,7 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
             rvComAdapter.setItemDecorationType(itemDecorationType);
             rvComAdapter.setOrientation(mOrientation);
             rvComAdapter.setDividerDrawable(dividerDrawable);
+            rvComAdapter.setDefaltItemDecorationType(defaltItemDecorationType);
             return rvComAdapter.into(recyclerView, initView);
         }
 
