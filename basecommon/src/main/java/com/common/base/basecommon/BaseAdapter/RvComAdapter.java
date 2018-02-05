@@ -62,7 +62,11 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
     private  int itemDecorationType;
     private Drawable dividerDrawable;
     private int defaltItemDecorationType;
-    private int itemBgDraId;
+    private boolean  isShuiBowen;
+
+    public void setShuiBowen(boolean shuiBowen) {
+        isShuiBowen = shuiBowen;
+    }
 
     public @DrawableRes int getItemBgDraId() {
         return R.drawable.shui_bowen;
@@ -175,8 +179,8 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
             return ITEM_TYPE_EMPTY;
         }
 
-        if (isLoadMore(position)) {
-            return ITEM_TYPE_LOAD_MORE;
+            if (isLoadMore(position)) {
+                return ITEM_TYPE_LOAD_MORE;
         }
         return super.getItemViewType(position);
     }
@@ -184,14 +188,14 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
     @Override
     public RvViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ITEM_TYPE_EMPTY) {
-            RvViewHolder hodler = RvViewHolder.createViewHolder(this.mContext, parent, mEmptyLayoutId);
+            RvViewHolder hodler = RvViewHolder.createViewHolder(this.mContext, parent, mEmptyLayoutId,isShuiBowen);
             if (onEmptyListener != null) {
                 onEmptyListener.onEmpty(hodler);
             }
             return hodler;
         }
         if (viewType == ITEM_TYPE_LOAD_MORE) {
-            RvViewHolder hodler = RvViewHolder.createViewHolder(this.mContext, parent, mLoadMoreLayoutId);
+            RvViewHolder hodler = RvViewHolder.createViewHolder(this.mContext, parent, mLoadMoreLayoutId,isShuiBowen);
             if (onLoadMoreListener != null) {
                 onLoadMoreListener.onLoadMore(hodler);
             }
@@ -321,10 +325,20 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
         private  int itemDecorationType=0;
         private Drawable dividerDrawable;
         private static final String TAG = "Builder";
+        private boolean  isShuiBowen=true;
 
-
-        public void setDividerDrawable(Drawable dividerDrawable) {
+        public Builder setDividerDrawable(Drawable dividerDrawable) {
             this.dividerDrawable = dividerDrawable;
+            return this;
+        }
+
+        /**
+         * 不设置水波纹背景
+         * @return
+         */
+        public Builder setNoBackground(){
+            this.isShuiBowen=false;
+            return this;
         }
 
         /**
@@ -419,6 +433,7 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
             rvComAdapter.setOrientation(mOrientation);
             rvComAdapter.setDividerDrawable(dividerDrawable);
             rvComAdapter.setDefaltItemDecorationType(defaltItemDecorationType);
+            rvComAdapter.setShuiBowen(isShuiBowen);
             return rvComAdapter.into(recyclerView, initView);
         }
 

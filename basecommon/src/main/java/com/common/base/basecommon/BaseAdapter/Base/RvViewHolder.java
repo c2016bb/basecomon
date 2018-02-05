@@ -49,13 +49,22 @@ public class RvViewHolder extends RecyclerView.ViewHolder {
         return holder;
     }
 
+    public static RvViewHolder createViewHolder(Context context, ViewGroup parent, int layoutId){
+        View itemView = LayoutInflater.from(context).inflate(layoutId, parent,
+                false);
+        return new RvViewHolder(context, itemView);
+    }
+
+
     public static RvViewHolder createViewHolder(Context context,
-                                                ViewGroup parent, int layoutId)
+                                                ViewGroup parent, int layoutId,boolean isbackground)
     {
         View itemView = LayoutInflater.from(context).inflate(layoutId, parent,
                 false);
+        if (isbackground==true){
         final Drawable drawable=context.getResources().getDrawable(R.drawable.shui_bowen);
             setItemBg(drawable,itemView);
+        }
         return new RvViewHolder(context, itemView);
     }
     private static void setItemBg(Drawable drawable,View view){

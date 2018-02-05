@@ -26,6 +26,9 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<RvViewHolder> 
     protected ItemViewDelegateManager mItemViewDelegateManager;
     protected OnItemAdapterClickListener mOnItemClickListener;
     protected OnItemAdapterLongClickListener mOnItemLongClickListener;
+    private boolean isShuiBoWen=true;
+
+
 
     public void setOnItemAdapterClickListener(OnItemAdapterClickListener mOnItemAdapterClickListener) {
         this.mOnItemClickListener = mOnItemAdapterClickListener;
@@ -48,7 +51,7 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<RvViewHolder> 
     public RvViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemViewDelegate itemViewDelegate = this.mItemViewDelegateManager.getItemViewDelegate(viewType);
         int layoutId = itemViewDelegate.getItemViewLayoutId();
-        RvViewHolder holder = RvViewHolder.createViewHolder(this.mContext, parent, layoutId);
+        RvViewHolder holder = RvViewHolder.createViewHolder(this.mContext, parent, layoutId,isShuiBoWen);
         this.onViewHolderCreated(holder, holder.getConvertView());
         this.setListener(parent, holder, viewType);
         return holder;
@@ -56,6 +59,11 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<RvViewHolder> 
 
     public void onViewHolderCreated(RvViewHolder holder, View itemView) {
     }
+
+    public void  setNoBackGround(){
+        this.isShuiBoWen=false;
+    }
+
 
     public void convert(RvViewHolder holder, T t) {
         this.mItemViewDelegateManager.convert(holder, t, holder.getAdapterPosition());
