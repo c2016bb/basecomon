@@ -21,7 +21,7 @@ import java.util.List;
  * OrientationHelper.VERTICAL
  *
  */
-
+@Deprecated
 public class RvCommonAdapter<T> extends MultiItemTypeAdapter<T> {
     private InitViewCallBack callBack;
     private int layoutId;

@@ -321,12 +321,20 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
         private  int itemDecorationType=0;
         private Drawable dividerDrawable;
         private static final String TAG = "Builder";
+
+
         public void setDividerDrawable(Drawable dividerDrawable) {
             this.dividerDrawable = dividerDrawable;
         }
 
+        /**
+         *LinearLayoutManager.HORIZONTAL or LinearLayoutManager.VERTICAL
+         * @param mOrientation
+         * @return
+         */
         public Builder setOrientation(int mOrientation) {
             this.mOrientation = mOrientation;
+
             return this;
         }
 
@@ -379,7 +387,12 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
             return this;
         }
 
-
+        /**
+         * RvComAdapter.LINEARLAYOUTMANAGER or RvComAdapter.GRIDLAYOUTMANAGER
+         *
+         * @param layoutManagerType
+         * @return
+         */
         public Builder setLayoutManagerType(int layoutManagerType) {
             this.layoutManagerType = layoutManagerType;
             return this;
