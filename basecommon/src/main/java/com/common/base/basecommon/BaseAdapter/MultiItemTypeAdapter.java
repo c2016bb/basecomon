@@ -39,9 +39,14 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<RvViewHolder> 
     }
 
     public MultiItemTypeAdapter(Context context, List<T> datas) {
+       this(context,datas,true);
+    }
+
+    public MultiItemTypeAdapter(Context context, List<T> datas,boolean isShuiBoWen) {
         this.mContext = context;
         this.mDatas = datas;
         this.mItemViewDelegateManager = new ItemViewDelegateManager();
+        this.isShuiBoWen=isShuiBoWen;
     }
 
     public int getItemViewType(int position) {
@@ -56,6 +61,9 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<RvViewHolder> 
         this.setListener(parent, holder, viewType);
         return holder;
     }
+
+
+
 
     public void onViewHolderCreated(RvViewHolder holder, View itemView) {
     }

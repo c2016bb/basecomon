@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.common.base.basecommon.R;
 
@@ -61,7 +62,7 @@ public class RvViewHolder extends RecyclerView.ViewHolder {
     {
         View itemView = LayoutInflater.from(context).inflate(layoutId, parent,
                 false);
-        if (isbackground==true){
+        if (isbackground){
         final Drawable drawable=context.getResources().getDrawable(R.drawable.shui_bowen);
             setItemBg(drawable,itemView);
         }

@@ -64,9 +64,6 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
     private int defaltItemDecorationType;
     private boolean  isShuiBowen;
 
-    public void setShuiBowen(boolean shuiBowen) {
-        isShuiBowen = shuiBowen;
-    }
 
     public @DrawableRes int getItemBgDraId() {
         return R.drawable.shui_bowen;
@@ -121,9 +118,14 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
     }
 
     public RvComAdapter(Context context, List<T> datas) {
-        super(context, datas);
-        this.context=context;
+     this(context,datas,true);
     }
+    public RvComAdapter(Context context, List<T> datas,boolean isShuiBowen) {
+        super(context, datas,isShuiBowen);
+        this.context=context;
+        this.isShuiBowen=isShuiBowen;
+    }
+
 
     private void createAdapter() {
         if (layoutManagerType==0||layoutManagerType == LINEARLAYOUTMANAGER) {
@@ -187,21 +189,21 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
 
     @Override
     public RvViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == ITEM_TYPE_EMPTY) {
+        if (viewType == ITEM_TYPE_EMPTY) { //当为空时
             RvViewHolder hodler = RvViewHolder.createViewHolder(this.mContext, parent, mEmptyLayoutId,isShuiBowen);
             if (onEmptyListener != null) {
                 onEmptyListener.onEmpty(hodler);
             }
             return hodler;
         }
-        if (viewType == ITEM_TYPE_LOAD_MORE) {
+        if (viewType == ITEM_TYPE_LOAD_MORE) {//当加载时
             RvViewHolder hodler = RvViewHolder.createViewHolder(this.mContext, parent, mLoadMoreLayoutId,isShuiBowen);
             if (onLoadMoreListener != null) {
                 onLoadMoreListener.onLoadMore(hodler);
             }
             return hodler;
         }
-        return super.onCreateViewHolder(parent, viewType);
+        return super.onCreateViewHolder(parent, viewType);//正常时
     }
 
     @Override
@@ -261,7 +263,6 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-
         RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
         if (manager instanceof GridLayoutManager) {
             GridLayoutManager griManager = (GridLayoutManager) manager;
@@ -419,7 +420,7 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
         }
 
         public RvComAdapter into(RecyclerView recyclerView, InitViewCallBack initView) {
-            RvComAdapter rvComAdapter = new RvComAdapter(context, mDatas);
+            RvComAdapter rvComAdapter = new RvComAdapter(context, mDatas,isShuiBowen);
             rvComAdapter.setOnLoadMoreListener(onLoadMoreListener);
             rvComAdapter.setmLoadMoreLayoutId(mLoadMoreLayoutId);
             rvComAdapter.setLayoutManagerType(layoutManagerType);
@@ -433,7 +434,6 @@ public class RvComAdapter<T> extends MultiItemTypeAdapter<T> {
             rvComAdapter.setOrientation(mOrientation);
             rvComAdapter.setDividerDrawable(dividerDrawable);
             rvComAdapter.setDefaltItemDecorationType(defaltItemDecorationType);
-            rvComAdapter.setShuiBowen(isShuiBowen);
             return rvComAdapter.into(recyclerView, initView);
         }
 
