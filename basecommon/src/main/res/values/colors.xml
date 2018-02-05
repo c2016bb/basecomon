@@ -2,6 +2,7 @@
 <resources>
     <color name="white">#ffffff</color>
     <color name="colorPrimary_light_trsp" >#7b393a3f</color>
-    <color name="fa">#FAFAFA</color>
-    <color name="d7">#D7D7D7</color>
+    <color name="fa">#FFFFFF</color>
+    <!--<color name="d7">#D7D7D7</color>-->
+    <color name="d7">#FFFFFF</color>
 </resources>
